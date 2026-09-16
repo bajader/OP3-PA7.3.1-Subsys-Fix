@@ -5,20 +5,20 @@ A small flashable zip that fixes the random reboots (Kernel Panic) caused by Wi-
 ## Why does it reboot?
 On the stock PA 7.3.1 kernel, the Wi-Fi subsystem (CNSS) driver has `restart_level` set to `system`. Because of this, every time the Wi-Fi firmware crashes, the whole SoC resets. The phone just reboots.
 
-## How we fix it
-Compiling a custom kernel for a 2017 ROM using modern toolchains is a pain and usually ends in bootloops. So instead of touching the kernel binary, this zip just edits the ramdisk.
+## How to fix it
+Compiling a custom kernel for a 2017 ROM using my M1 MacBook Air was a pain in the ass, ended up compiling a kernel that bricked my device. So instead of touching the kernel binary, this zip just edits the ramdisk.
 
-It uses AnyKernel3 to inject `init.subsys.rc` into your `boot.img` during TWRP installation. On every boot, it simply writes `related` to the sysfs `restart_level` for all subsystems. 
+It uses [AnyKernel3](https://github.com/osm0sis/AnyKernel3) to inject `init.subsys.rc` into your `boot.img` during TWRP installation. On every boot, it simply writes `related` to the sysfs `restart_level` for all subsystems. 
 If the Wi-Fi module crashes now, only the Wi-Fi subsystem restarts in the background. The OS stays up.
 
-## Install
+## Installation
 1. Download `OP3-PA7.3.1-Subsys-Fix.zip` from Releases.
 2. Boot into TWRP.
 3. Flash your ROM and GApps (if clean flashing).
 4. Flash the fix zip.
 5. Reboot.
 
-## Still having issues? (Clean install guide)
+## Troubleshooting / Clean Install Guide
 If it still acts up, you might need a proper clean wipe:
 1. Flash stock **OxygenOS 3** via MSM Download Tool.
 2. OTA update all the way to **OxygenOS 4.5.1**.
